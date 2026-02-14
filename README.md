@@ -32,29 +32,10 @@ Web Application สำหรับช่วยผู้ใช้ค้นหา 
 1. สร้าง **Google Sheets** ไฟล์ใหม่บน Google Drive
 2. ในแถวแรก (Row 1) ให้สร้างหัวข้อคอลัมน์ A ถึง E ดังนี้: `Timestamp` | `สิ่งที่รัก` | `โลกต้องการ` | `สร้างรายได้` | `ทำได้ดี`
 3. ไปที่เมนู **ส่วนขยาย (Extensions)** > **Apps Script**
-4. ลบโค้ดเดิมออกให้หมด แล้ววางโค้ดนี้ลงไป:
-```javascript
-function doPost(e) { 
-  try { 
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet(); 
-    var data = JSON.parse(e.postData.contents); 
-    var timestamp = new Date();
-
-    sheet.appendRow([timestamp, data.love, data.world, data.paid, data.good]);
-
-    return ContentService.createTextOutput(JSON.stringify({"result":"success"}))
-      .setMimeType(ContentService.MimeType.JSON);   
-  } catch(error) {
-    return ContentService.createTextOutput(JSON.stringify({"result":"error", "error": error.message}))
-      .setMimeType(ContentService.MimeType.JSON);   
-  }
-}
-
-กดปุ่ม บันทึก และกด การทำให้ใช้งานได้ (Deploy) > การทำให้ใช้งานได้รายการใหม่ (New deployment)
-
-เลือกประเภทเป็น เว็บแอป (Web app) และตั้งค่า สิทธิ์การเข้าถึง (Who has access) ให้เป็น "ทุกคน (Anyone)"
-
-กด ทำให้ใช้งานได้ (Deploy) และ คัดลอก URL ของเว็บแอป เก็บไว้
+4. ลบโค้ดเดิมออกให้หมด แล้ววางโค้ดนี้ลงไป:(```javascript ด้านล่าง)
+5. กดปุ่ม บันทึก และกด การทำให้ใช้งานได้ (Deploy) > การทำให้ใช้งานได้รายการใหม่ (New deployment)
+6. เลือกประเภทเป็น เว็บแอป (Web app) และตั้งค่า สิทธิ์การเข้าถึง (Who has access) ให้เป็น "ทุกคน (Anyone)"
+7. กด ทำให้ใช้งานได้ (Deploy) และ คัดลอก URL ของเว็บแอป เก็บไว้
 
 2. การตั้งค่า Frontend
 Clone repository นี้ลงเครื่อง:
@@ -87,6 +68,26 @@ GitHub Profile: https://github.com/nhuying
 Live Website: https://nhuying.github.io/ikigai/
 
 โปรเจกต์นี้สร้างขึ้นเพื่อเป็นเครื่องมือช่วยให้ทุกคนได้มีพื้นที่ทบทวนจิตใจ ค้นพบจุดสมดุล และเห็นคุณค่าในทุกๆ วันของการใช้ชีวิต
+
+
+```javascript
+function doPost(e) { 
+  try { 
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet(); 
+    var data = JSON.parse(e.postData.contents); 
+    var timestamp = new Date();
+
+    sheet.appendRow([timestamp, data.love, data.world, data.paid, data.good]);
+
+    return ContentService.createTextOutput(JSON.stringify({"result":"success"}))
+      .setMimeType(ContentService.MimeType.JSON);   
+  } catch(error) {
+    return ContentService.createTextOutput(JSON.stringify({"result":"error", "error": error.message}))
+      .setMimeType(ContentService.MimeType.JSON);   
+  }
+}
+
+
 
 
 
