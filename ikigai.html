@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ค้นหา IKIGAI ของตัวเอง</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Mali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        /* --- Global Styles --- */
+        body { font-family: 'Kanit', sans-serif; background-color: #FFF9F5; color: #5A4A42; }
+        .font-mali { font-family: 'Mali', cursive; }
+        textarea { resize: none; transition: all 0.3s ease; }
+        textarea:focus { outline: none; transform: scale(1.02); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Color Themes (พื้นหลัง Input และ Box) --- */
+        .bg-love { background-color: #FCE1E4; }
+        .bg-good { background-color: #E2F0CB; }
+        .bg-world { background-color: #FFF2DF; }
+        .bg-paid { background-color: #DFE7EC; }
+        .bg-passion { background-color: #FFB7B2; } 
+        .bg-mission { background-color: #FFDAC1; } 
+        .bg-vocation { background-color: #E2F0CB; } 
+        .bg-profession { background-color: #C5E3D6; } 
+
+        /* --- Venn Diagram Styles --- */
+        .venn-wrapper {
+            position: relative; width: 100%; max-width: 600px; aspect-ratio: 1 / 1; 
+            margin: 0 auto; font-family: 'Mali', cursive;
+        }
+        .venn-circle {
+            position: absolute; width: 60%; height: 60%; border-radius: 50%;
+            mix-blend-mode: multiply; opacity: 0.7; transition: all 0.5s ease; z-index: 1;
+        }
+        .vc-love { top: 0; left: 20%; background-color: #FF9AA2; } 
+        .vc-needs { top: 20%; right: 0; background-color: #FFDAC1; } 
+        .vc-paid { bottom: 0; left: 20%; background-color: #B5EAD7; } 
+        .vc-good { top: 20%; left: 0; background-color: #C7CEFF; } 
+
+        /* --- Dynamic Text Labels --- */
+        .diagram-val {
+            position: absolute; text-align: center; font-weight: 600; z-index: 20; 
+            pointer-events: none; display: -webkit-box; -webkit-line-clamp: 3; 
+            -webkit-box-orient: vertical; overflow: hidden;
+            text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.9), 0px 0px 2px rgba(255, 255, 255, 1);
+            transition: color 0.3s ease;
+        }
+        .val-love { top: 8%; left: 50%; transform: translateX(-50%); width: 40%; color: #D63447; }
+        .val-needs { top: 50%; right: 2%; transform: translateY(-50%); width: 30%; color: #E67E22; }
+        .val-paid { bottom: 8%; left: 50%; transform: translateX(-50%); width: 40%; color: #2E86AB; }
+        .val-good { top: 50%; left: 2%; transform: translateY(-50%); width: 30%; color: #6A4C93; }
+
+        .venn-label { position: absolute; font-weight: bold; text-align: center; pointer-events: none; z-index: 10; font-size: 0.85rem;}
+        .vl-inter { color: #777; opacity: 0.9; }
+        .vi-passion { top: 26%; left: 26%; }
+        .vi-mission { top: 26%; right: 26%; }
+        .vi-profession { bottom: 26%; left: 26%; }
+        .vi-vocation { bottom: 26%; right: 26%; }
+        
+        /* จุดกึ่งกลาง IKIGAI */
+        .ikigai-center {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 25%; height: 25%; display: flex; justify-content: center; align-items: center;
+            text-align: center; border-radius: 50%; background-color: rgba(255, 255, 255, 0.6);
+            z-index: 30; font-weight: 700; font-size: 1.1rem; color: #999;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1); transition: all 0.5s ease;
+        }
+        .ikigai-center.active {
+            background-color: #fff; color: #5A639C; box-shadow: 0 0 20px rgba(90, 99, 156, 0.5); font-size: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+             .diagram-val { font-size: 0.8rem; -webkit-line-clamp: 2; }
+             .vl-inter { font-size: 0.65rem; }
+             .ikigai-center { font-size: 0.85rem; }
+             .ikigai-center.active { font-size: 1.1rem; }
+        }
+        
+        /* Loading Animation สำหรับปุ่ม */
+        .loading { pointer-events: none; opacity: 0.7; }
+        
+        /* สไตล์พิเศษสำหรับกรอบตอนถ่ายรูปภาพ */
+        #capture-area { background-color: #FFF9F5; padding-top: 2rem; padding-bottom: 2rem; border-radius: 2rem; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <header class="max-w-4xl mx-auto text-center mb-10 fade-in">
+        <h1 class="text-5xl md:text-6xl font-mali font-bold text-gray-700 mb-4 tracking-wide">ค้นหา <span class="text-[#5A639C]">IKIGAI</span> ของตัวเองกัน</h1>
+        <div class="bg-white/60 p-6 rounded-3xl shadow-sm border border-orange-100 inline-block text-left max-w-2xl mt-4">
+            <h2 class="text-2xl font-semibold mb-3 text-orange-400 font-mali">แบบไหนถึงเรียก Ikigai?</h2>
+            <ul class="list-disc list-inside space-y-2 text-lg">
+                <li>ความหมายของชีวิต และเหตุผลของการมีชีวิตอยู่ของเรา</li>
+                <li>ไม่ใช่เหตุผลของคนอื่น ไม่ใช่สิ่งที่คนอื่นคาดหวังหรือบอกว่าดี</li>
+                <li>เป็นสิ่งที่เรารู้ว่าเราทำได้ดี เป็นสิ่งที่เรารัก และทำให้เรามีรายได้</li>
+                <li>บางทีก็บอกยากเท่าไหร่...ก็เท่านั้น แค่ลองหมั่นสังเกตทบทวน</li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-12">
+        
+        <section class="fade-in">
+            <h2 class="text-3xl font-mali font-bold text-center mb-6">เช็กลิสต์ Ikigai (ตอบคำถาม 4 ข้อด้านล่าง)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-love p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
+                    <label for="input-love" class="block text-xl font-semibold mb-3 text-red-800">1. สิ่งที่เรารัก และมีความสุขที่ได้ทำ คืออะไร? (What you LOVE)</label>
+                    <textarea id="input-love" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่คุณรักที่นี่..."></textarea>
+                </div>
+                <div class="bg-world p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
+                    <label for="input-world" class="block text-xl font-semibold mb-3 text-yellow-800">2. สิ่งที่เราคิดว่ามีประโยชน์ต่อโลก คืออะไร? (What the world NEEDS)</label>
+                    <textarea id="input-world" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่เป็นประโยชน์ต่อโลกที่นี่..."></textarea>
+                </div>
+                <div class="bg-paid p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
+                    <label for="input-paid" class="block text-xl font-semibold mb-3 text-blue-800">3. สิ่งที่สร้างรายได้ให้เรา คืออะไร? (What you can be PAID FOR)</label>
+                    <textarea id="input-paid" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่สร้างรายได้ที่นี่..."></textarea>
+                </div>
+                <div class="bg-good p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
+                    <label for="input-good" class="block text-xl font-semibold mb-3 text-green-800">4. สิ่งที่เราทำได้ดี คืออะไร? (What you are GOOD AT)</label>
+                    <textarea id="input-good" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่คุณทำได้ดีที่นี่..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-orange-200">
+
+        <section class="fade-in delay-100">
+            <h2 class="text-3xl font-mali font-bold text-center mb-2">จุดซ้อนทับของตัวตน</h2>
+            <p class="text-center text-lg mb-8 text-gray-500">ระบบจะนำคำตอบของคุณมาจับคู่กันเพื่อค้นหาตัวตนในด้านต่างๆ</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-[2rem] border-2 border-[#FFB7B2] shadow-sm text-center">
+                    <div class="inline-block bg-passion text-white font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Passion</div>
+                    <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 1 + 4<br>(สิ่งที่เรารัก และเราทำได้ดี)</h3>
+                    <div id="res-passion" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] border-2 border-[#FFDAC1] shadow-sm text-center">
+                    <div class="inline-block bg-mission text-gray-700 font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Mission</div>
+                    <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 1 + 2<br>(สิ่งที่เรารัก และมีประโยชน์ต่อโลก)</h3>
+                    <div id="res-mission" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] border-2 border-[#E2F0CB] shadow-sm text-center">
+                    <div class="inline-block bg-vocation text-green-800 font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Vocation</div>
+                    <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 2 + 3<br>(สิ่งที่มีประโยชน์ต่อโลก และสร้างรายได้)</h3>
+                    <div id="res-vocation" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] border-2 border-[#C5E3D6] shadow-sm text-center">
+                    <div class="inline-block bg-profession text-teal-800 font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Profession</div>
+                    <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 3 + 4<br>(สิ่งที่สร้างรายได้ และเราทำได้ดี)</h3>
+                    <div id="res-profession" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fade-in delay-200 mt-12 pb-10">
+            
+            <div id="capture-area">
+                <h2 class="text-3xl font-mali font-bold text-center mb-8 text-[#5A639C]">แผนภาพ Ikigai ของฉัน</h2>
+                
+                <div class="venn-wrapper shadow-xl rounded-full bg-white/30 backdrop-blur-sm p-4">
+                    <div class="venn-circle vc-love"></div>
+                    <div class="venn-circle vc-needs"></div>
+                    <div class="venn-circle vc-paid"></div>
+                    <div class="venn-circle vc-good"></div>
+
+                    <div id="val-love" class="diagram-val val-love text-xl md:text-2xl">สิ่งที่รัก</div>
+                    <div id="val-world" class="diagram-val val-needs text-xl md:text-2xl">โลกต้องการ</div>
+                    <div id="val-paid" class="diagram-val val-paid text-xl md:text-2xl">สร้างรายได้</div>
+                    <div id="val-good" class="diagram-val val-good text-xl md:text-2xl">ทำได้ดี</div>
+
+                    <div class="venn-label vl-inter vi-passion">Passion</div>
+                    <div class="venn-label vl-inter vi-mission">Mission</div>
+                    <div class="venn-label vl-inter vi-profession">Profession</div>
+                    <div class="venn-label vl-inter vi-vocation">Vocation</div>
+                    
+                    <div id="ikigai-center-display" class="ikigai-center">
+                        เติมให้ครบ<br>ทั้ง 4 ข้อ
+                    </div>
+                </div>
+
+                <div id="final-summary-card" class="mt-12 mx-auto max-w-4xl bg-white p-8 rounded-[2rem] shadow-lg border-2 border-indigo-100 hidden flex-col items-center">
+                    <h2 class="text-4xl md:text-5xl font-mali font-bold text-[#5A639C] mb-6 tracking-widest">IKIGAI</h2>
+                    <p class="text-xl mb-6 text-gray-700 font-medium text-center">จุดกึ่งกลางของทุกสิ่ง คือความหมายในการตื่นนอนทุกเช้าของคุณ</p>
+                    <div id="res-ikigai-text" class="w-full text-lg text-gray-700 leading-relaxed text-center font-mali bg-gray-50 p-6 rounded-2xl shadow-inner mb-2"></div>
+                </div>
+            </div>
+
+           <div id="action-area" class="mt-8 flex flex-col items-center hidden fade-in pb-10">
+                <button id="btn-submit" class="bg-gradient-to-r from-[#5A639C] to-[#747dc4] text-white px-8 py-4 rounded-full font-mali font-bold text-xl hover:shadow-lg transform hover:-translate-y-1 transition-all">
+                    📸 บันทึกรูปภาพ Ikigai ของฉัน
+                </button>
+                <p class="mt-2 text-sm text-gray-400 font-mali">*ข้อมูลจะถูกจัดเก็บเป็นสถิติภาพรวมแบบไม่ระบุตัวตน เพื่อนำไปพัฒนาต่อไป</p>
+                <p id="submit-status" class="mt-3 text-gray-600 font-medium h-6"></p>
+            </div>
+
+
+        </section>
+
+    </main>
+
+    <script>
+        // ==== ใส่ URL ที่ได้จาก Google Apps Script ที่นี่ ====
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJ2prT2j7QVuCKOjpANoWoi9OMC7TC4dsvdDYE5oGuDGPQQV9am4WorMqUrQn6iyRjaQ/exec"; 
+        
+        // DOM Elements
+        const inputLove = document.getElementById('input-love');
+        const inputWorld = document.getElementById('input-world');
+        const inputPaid = document.getElementById('input-paid');
+        const inputGood = document.getElementById('input-good');
+        
+        const resPassion = document.getElementById('res-passion');
+        const resMission = document.getElementById('res-mission');
+        const resVocation = document.getElementById('res-vocation');
+        const resProfession = document.getElementById('res-profession');
+
+        const valLove = document.getElementById('val-love');
+        const valWorld = document.getElementById('val-world');
+        const valPaid = document.getElementById('val-paid');
+        const valGood = document.getElementById('val-good');
+
+        const centerDisplay = document.getElementById('ikigai-center-display');
+        const summaryCard = document.getElementById('final-summary-card');
+        const summaryText = document.getElementById('res-ikigai-text');
+        
+        const actionArea = document.getElementById('action-area');
+        const btnSubmit = document.getElementById('btn-submit');
+        const submitStatus = document.getElementById('submit-status');
+
+        function updateIkigai() {
+            const love = inputLove.value.trim();
+            const world = inputWorld.value.trim();
+            const paid = inputPaid.value.trim();
+            const good = inputGood.value.trim();
+
+            const combineText = (text1, text2) => {
+                if(text1 && text2) return `❤️ ${text1}\n✨ ${text2}`;
+                if(text1) return `❤️ ${text1}`;
+                if(text2) return `✨ ${text2}`;
+                return '- รอข้อมูล -';
+            };
+            resPassion.innerText = combineText(love, good);
+            resMission.innerText = combineText(love, world);
+            resVocation.innerText = combineText(world, paid);
+            resProfession.innerText = combineText(paid, good);
+
+            valLove.innerText = love || "สิ่งที่รัก";
+            valWorld.innerText = world || "โลกต้องการ";
+            valPaid.innerText = paid || "สร้างรายได้";
+            valGood.innerText = good || "ทำได้ดี";
+
+            valLove.style.color = love ? '#7B1E29' : '#D63447';
+            valWorld.style.color = world ? '#9C5311' : '#E67E22';
+            valPaid.style.color = paid ? '#184F68' : '#2E86AB';
+            valGood.style.color = good ? '#3B2956' : '#6A4C93';
+
+            // ตรวจสอบว่ากรอกครบ 4 ช่องหรือยัง
+            if (love && world && paid && good) {
+                centerDisplay.classList.add('active');
+                centerDisplay.innerHTML = "🎉<br>IKIGAI";
+
+                summaryCard.classList.remove('hidden');
+                summaryCard.classList.add('flex');
+                summaryText.innerHTML = `
+                    <p class="mb-2"><strong class="text-red-500">สิ่งที่คุณรัก:</strong> ${love}</p>
+                    <p class="mb-2"><strong class="text-yellow-600">โลกต้องการ:</strong> ${world}</p>
+                    <p class="mb-2"><strong class="text-blue-500">สร้างรายได้:</strong> ${paid}</p>
+                    <p class="mb-2"><strong class="text-green-600">สิ่งที่คุณทำได้ดี:</strong> ${good}</p>
+                `;
+                // แสดงปุ่มบันทึก
+                actionArea.classList.remove('hidden');
+            } else {
+                centerDisplay.classList.remove('active');
+                centerDisplay.innerHTML = "เติมให้ครบ<br>ทั้ง 4 ข้อ";
+                
+                summaryCard.classList.add('hidden');
+                summaryCard.classList.remove('flex');
+                // ซ่อนปุ่มบันทึก
+                actionArea.classList.add('hidden');
+            }
+        }
+
+        inputLove.addEventListener('input', updateIkigai);
+        inputWorld.addEventListener('input', updateIkigai);
+        inputPaid.addEventListener('input', updateIkigai);
+        inputGood.addEventListener('input', updateIkigai);
+
+        // ระบบจับภาพหน้าจอและส่งข้อมูล
+        btnSubmit.addEventListener('click', () => {
+            const data = {
+                love: inputLove.value.trim(),
+                world: inputWorld.value.trim(),
+                paid: inputPaid.value.trim(),
+                good: inputGood.value.trim()
+            };
+
+            // 1. เปลี่ยนสถานะปุ่มกำลังโหลด
+            btnSubmit.classList.add('loading');
+            btnSubmit.innerHTML = 'กำลังสร้างรูปภาพ... ⏳';
+            submitStatus.innerText = '';
+            submitStatus.className = "mt-4 text-gray-600 font-medium h-6";
+
+            // 2. จับภาพหน้าจอเฉพาะพื้นที่ id="capture-area"
+            const captureArea = document.getElementById('capture-area');
+            
+            html2canvas(captureArea, {
+                scale: 2, // เพิ่มความคมชัดของรูปภาพ
+                backgroundColor: "#FFF9F5" // กำหนดสีพื้นหลังให้ตรงกับเว็บ
+            }).then(canvas => {
+                // 3. สร้างระบบดาวน์โหลดรูปภาพ
+                const link = document.createElement('a');
+                link.download = 'My_Ikigai_Result.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click(); // สั่งให้ดาวน์โหลดทันที
+
+                // 4. เปลี่ยนข้อความบนปุ่ม และเตรียมส่งข้อมูลไป Sheet
+                btnSubmit.innerHTML = 'กำลังบันทึกข้อมูล... 📤';
+                
+                return fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+            })
+            .then(() => {
+                // 5. เมื่อส่งข้อมูลเสร็จสิ้น
+                btnSubmit.innerHTML = '✅ บันทึกรูปภาพสำเร็จ!';
+                btnSubmit.classList.remove('from-[#5A639C]', 'to-[#747dc4]');
+                btnSubmit.classList.add('bg-green-500');
+                submitStatus.innerText = 'ขอบคุณที่ร่วมค้นหา Ikigai ของคุณ รูปภาพถูกดาวน์โหลดลงเครื่องคุณแล้ว!';
+                submitStatus.classList.add('text-green-600');
+                
+                // รีเซ็ตปุ่มกลับหลังผ่านไป 5 วินาที
+                setTimeout(() => {
+                    btnSubmit.classList.remove('loading', 'bg-green-500');
+                    btnSubmit.classList.add('from-[#5A639C]', 'to-[#747dc4]');
+                    btnSubmit.innerHTML = '📸 บันทึกภาพ Ikigai ของฉัน';
+                }, 5000);
+            })
+            .catch((error) => {
+                btnSubmit.classList.remove('loading');
+                btnSubmit.innerHTML = '❌ เกิดข้อผิดพลาด ลองใหม่';
+                submitStatus.innerText = 'ไม่สามารถสร้างภาพหรือส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
+                submitStatus.classList.add('text-red-500');
+            });
+        });
+
+    </script>
+</body>
+</html>
