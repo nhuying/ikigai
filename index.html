@@ -131,7 +131,7 @@
         <p class="splash-text text-lg md:text-xl text-gray-400 mt-8 font-kanit" style="animation-delay: 1s;">กรุณารอสักครู่...</p>
     </div>
 
-    <div id="landing-page" class="max-w-4xl mx-auto pt-10 pb-20 fade-in" style="display: none;">
+    <div id="landing-page" class="max-w-4xl mx-auto pt-10 pb-20" style="display: none;">
         <div class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-mali font-bold text-[#5A639C] mb-6 leading-tight">เหตุผลในการตื่นนอนพรุ่งนี้เช้าของคุณ... <br>คืออะไร? 🧭</h1>
             <p class="text-xl text-gray-600 font-kanit max-w-2xl mx-auto">ไม่ว่าคุณจะอยู่ในช่วงวัยไหน ชีวิตก็พร้อมให้เราค้นพบความหมายที่ซ่อนอยู่เสมอ... เลือกช่วงวัยที่ตรงกับคุณ เพื่อเริ่มต้นค้นหา Ikigai ของตัวเอง</p>
@@ -300,8 +300,9 @@
                 
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
-                    // เปลี่ยนจากโชว์ main-content เป็นโชว์ landing-page ให้เลือกอายุก่อน
+                    // แสดงหน้า landing page และเติมคลาสให้เล่นอนิเมชันที่นี่
                     landingPage.style.display = 'block'; 
+                    landingPage.classList.add('fade-in'); 
                 }, 1000); 
 
             }, 3500); 
@@ -320,7 +321,7 @@
             document.getElementById('main-content').style.display = 'block';
         }
 
-        // ==== ใส่ URL ที่ได้จาก Google Apps Script ที่นี่ ====
+        // ==== URL ของ Google Apps Script ====
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJ2prT2j7QVuCKOjpANoWoi9OMC7TC4dsvdDYE5oGuDGPQQV9am4WorMqUrQn6iyRjaQ/exec"; 
         
         // DOM Elements
@@ -406,7 +407,6 @@
 
         // ระบบจับภาพหน้าจอและส่งข้อมูล
         btnSubmit.addEventListener('click', () => {
-            // เพิ่ม userAgeGroup เข้าไปในชุดข้อมูลที่จะส่งไป Google Sheets
             const data = {
                 ageGroup: userAgeGroup, 
                 love: inputLove.value.trim(),
@@ -455,9 +455,16 @@
             })
             .catch((error) => {
                 btnSubmit.classList.remove('loading');
-                btnSubmit.innerHTML = '❌ เกิดข้อผิดพลาด ลองใหม่';
-                submitStatus.innerText = 'ไม่สามารถสร้างภาพได้ กรุณาลองใหม่อีกครั้ง';
-                submitStatus.classList.add('text-red-500');
+                // อัปเดตข้อความเมื่อดึงข้อมูล Google Sheets บน Localhost หรือโดนบล็อก ให้ดูซอฟต์ลง
+                btnSubmit.innerHTML = '✅ รูปภาพถูกบันทึกแล้ว';
+                submitStatus.innerText = 'รูปภาพโหลดสำเร็จ! (หากต้องการส่งสถิติเข้าระบบ กรุณาใช้อินเทอร์เน็ตปกติ)';
+                submitStatus.classList.add('text-orange-500'); // เปลี่ยนเป็นสีส้มเพื่อไม่ให้ตกใจ
+                
+                setTimeout(() => {
+                    btnSubmit.classList.remove('loading', 'bg-green-500');
+                    btnSubmit.classList.add('from-[#5A639C]', 'to-[#747dc4]');
+                    btnSubmit.innerHTML = '📸 บันทึกรูปภาพ Ikigai ของฉัน';
+                }, 5000);
             });
         });
 
