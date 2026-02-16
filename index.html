@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="https://nhuying.github.io/ikigai/favicon.png">
+    
     <title>ค้นหา IKIGAI ของตัวเอง</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <meta property="og:title" content="ค้นหา IKIGAI - เหตุผลในการตื่นนอนพรุ่งนี้เช้าของคุณ">
+    <meta property="og:description" content="เครื่องมือสำรวจจิตใจ 4 มิติ เพื่อค้นหาจุดสมดุลและความหมายของการมีชีวิตอยู่ ลองใช้เวลาสั้นๆ ทบทวนตัวเองได้ที่นี่ ปลอดภัย 100%">
+    <meta property="og:image" content="https://nhuying.github.io/ikigai/preview-image.jpg">
+    <meta property="og:url" content="https://nhuying.github.io/ikigai/">
+    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Mali:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -123,16 +130,8 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
     </style>
-
-<meta property="og:title" content="ค้นหา IKIGAI - เหตุผลในการตื่นนอนพรุ่งนี้เช้าของคุณ">
-    <meta property="og:description" content="เครื่องมือสำรวจจิตใจ 4 มิติ เพื่อค้นหาจุดสมดุลและความหมายของการมีชีวิตอยู่ ลองใช้เวลาสั้นๆ ทบทวนตัวเองได้ที่นี่">
-    <meta property="og:image" content="https://nhuying.github.io/ikigai/preview-image.png">
-    <meta property="og:url" content="https://nhuying.github.io/ikigai/">
-    <meta property="og:type" content="website">
-
-
 </head>
-<body class="min-h-screen p-4 md:p-8">
+<body class="min-h-screen p-4 md:p-8 flex flex-col">
 
     <div id="splash-screen">
         <h1 id="random-splash-text" class="splash-text text-2xl md:text-4xl font-mali font-bold leading-loose md:leading-[2]">
@@ -140,150 +139,157 @@
         <p class="splash-text text-lg md:text-xl text-gray-400 mt-8 font-kanit" style="animation-delay: 1s;">กรุณารอสักครู่...</p>
     </div>
 
-    <div id="landing-page" class="max-w-4xl mx-auto pt-10 pb-20" style="display: none;">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-mali font-bold text-[#5A639C] mb-6 leading-tight">เหตุผลในการตื่นนอนพรุ่งนี้เช้าของคุณ... <br>คืออะไร? 🧭</h1>
-            <p class="text-xl text-gray-600 font-kanit max-w-2xl mx-auto">ไม่ว่าคุณจะอยู่ในช่วงวัยไหน ชีวิตก็พร้อมให้เราค้นพบความหมายที่ซ่อนอยู่เสมอ... เลือกช่วงวัยที่ตรงกับคุณ เพื่อเริ่มต้นค้นหา Ikigai ของตัวเอง</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="age-card bg-white p-8 rounded-3xl shadow-sm text-center" onclick="startIkigai('First Jobber (20-28)')">
-                <div class="text-5xl mb-4">🌱</div>
-                <h3 class="text-2xl font-mali font-bold text-gray-800 mb-3">วัยเริ่มต้นค้นหาเส้นทาง<br><span class="text-lg text-[#5A639C]">(20-28 ปี)</span></h3>
-                <p class="text-gray-500 font-kanit text-sm">กำลังค้นหาตัวเอง สับสนกับเส้นทาง อยากรู้ว่าสิ่งที่ชอบกับสิ่งที่ใช่... คือทางเดียวกันไหม?</p>
-            </div>
-            
-            <div class="age-card bg-white p-8 rounded-3xl shadow-sm text-center" onclick="startIkigai('Mid-Career (30-45)')">
-                <div class="text-5xl mb-4">🔥</div>
-                <h3 class="text-2xl font-mali font-bold text-gray-800 mb-3">วัยสร้างความมั่นคง<br><span class="text-lg text-[#5A639C]">(30-45 ปี)</span></h3>
-                <p class="text-gray-500 font-kanit text-sm">งานเริ่มมั่นคง แต่รู้สึกหมดไฟ ตื่นมาแล้วไม่อยากไปทำงาน... อยากตามหาแพสชันที่หล่นหาย</p>
+    <div class="flex-grow">
+        <div id="landing-page" class="max-w-4xl mx-auto pt-10 pb-10" style="display: none;">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-mali font-bold text-[#5A639C] mb-6 leading-tight">เหตุผลในการตื่นนอนพรุ่งนี้เช้าของคุณ... <br>คืออะไร? 🧭</h1>
+                <p class="text-xl text-gray-600 font-kanit max-w-2xl mx-auto">ไม่ว่าคุณจะอยู่ในช่วงวัยไหน ชีวิตก็พร้อมให้เราค้นพบความหมายที่ซ่อนอยู่เสมอ... เลือกช่วงวัยที่ตรงกับคุณ เพื่อเริ่มต้นค้นหา Ikigai ของตัวเอง</p>
             </div>
 
-            <div class="age-card bg-white p-8 rounded-3xl shadow-sm text-center" onclick="startIkigai('Silver Age (55+)')">
-                <div class="text-5xl mb-4">🌻</div>
-                <h3 class="text-2xl font-mali font-bold text-gray-800 mb-3">วัยส่งต่อคุณค่าและภูมิปัญญา<br><span class="text-lg text-[#5A639C]">(55 ปีขึ้นไป)</span></h3>
-                <p class="text-gray-500 font-kanit text-sm">มีเวลาว่างมากขึ้น อยากนำประสบการณ์ทั้งชีวิต มาสร้างคุณค่า รอยยิ้ม และส่งต่อให้คนรอบข้าง</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="main-content" style="display: none;">
-        
-        <header class="max-w-4xl mx-auto text-center mb-10 fade-in">
-            <h1 class="text-5xl md:text-6xl font-mali font-bold text-gray-700 mb-4 tracking-wide">ค้นหา <span class="text-[#5A639C]">IKIGAI</span> ของตัวเองกัน</h1>
-            <div class="bg-white/60 p-6 rounded-3xl shadow-sm border border-orange-100 inline-block text-left max-w-2xl mt-4">
-                <h2 class="text-2xl font-semibold mb-3 text-orange-400 font-mali">แบบไหนถึงเรียก Ikigai?</h2>
-                <ul class="list-disc list-inside space-y-2 text-lg">
-                    <li>ความหมายของชีวิต และเหตุผลของการมีชีวิตอยู่ของเรา</li>
-                    <li>ไม่ใช่เหตุผลของคนอื่น ไม่ใช่สิ่งที่คนอื่นคาดหวังหรือบอกว่าดี</li>
-                    <li>เป็นสิ่งที่เรารู้ว่าเราทำได้ดี เป็นสิ่งที่เรารัก และทำให้เรามีรายได้</li>
-                    <li>บางทีก็บอกยากเท่าไหร่...ก็เท่านั้น แค่ลองหมั่นสังเกตทบทวน</li>
-                </ul>
-            </div>
-        </header>
-
-        <main class="max-w-6xl mx-auto space-y-12">
-            
-            <section class="fade-in delay-100">
-                <h2 class="text-3xl font-mali font-bold text-center mb-6">เช็กลิสต์ Ikigai (ตอบคำถาม 4 ข้อด้านล่าง)</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-love p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
-                        <label for="input-love" class="block text-xl font-semibold mb-3 text-red-800">1. สิ่งที่เรารัก และมีความสุขที่ได้ทำ คืออะไร? (What you LOVE)</label>
-                        <textarea id="input-love" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่คุณรักที่นี่..."></textarea>
-                    </div>
-                    <div class="bg-world p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
-                        <label for="input-world" class="block text-xl font-semibold mb-3 text-yellow-800">2. สิ่งที่เราคิดว่ามีประโยชน์ต่อโลก คืออะไร? (What the world NEEDS)</label>
-                        <textarea id="input-world" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่เป็นประโยชน์ต่อโลกที่นี่..."></textarea>
-                    </div>
-                    <div class="bg-paid p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
-                        <label for="input-paid" class="block text-xl font-semibold mb-3 text-blue-800">3. สิ่งที่สร้างรายได้ให้เรา คืออะไร? (What you can be PAID FOR)</label>
-                        <textarea id="input-paid" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่สร้างรายได้ที่นี่..."></textarea>
-                    </div>
-                    <div class="bg-good p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
-                        <label for="input-good" class="block text-xl font-semibold mb-3 text-green-800">4. สิ่งที่เราทำได้ดี คืออะไร? (What you are GOOD AT)</label>
-                        <textarea id="input-good" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่คุณทำได้ดีที่นี่..."></textarea>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="age-card bg-white p-8 rounded-3xl shadow-sm text-center" onclick="startIkigai('First Jobber (20-28)')">
+                    <div class="text-5xl mb-4">🌱</div>
+                    <h3 class="text-2xl font-mali font-bold text-gray-800 mb-3">วัยเริ่มต้นค้นหาเส้นทาง<br><span class="text-lg text-[#5A639C]">(20-28 ปี)</span></h3>
+                    <p class="text-gray-500 font-kanit text-sm">กำลังค้นหาตัวเอง สับสนกับเส้นทาง อยากรู้ว่าสิ่งที่ชอบกับสิ่งที่ใช่... คือทางเดียวกันไหม?</p>
                 </div>
-            </section>
-
-            <hr class="border-orange-200">
-
-            <section class="fade-in delay-200">
-                <h2 class="text-3xl font-mali font-bold text-center mb-2">จุดซ้อนทับของตัวตน</h2>
-                <p class="text-center text-lg mb-8 text-gray-500">ระบบจะนำคำตอบของคุณมาจับคู่กันเพื่อค้นหาตัวตนในด้านต่างๆ</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-[2rem] border-2 border-[#FFB7B2] shadow-sm text-center">
-                        <div class="inline-block bg-passion text-white font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Passion</div>
-                        <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 1 + 4<br>(สิ่งที่เรารัก และเราทำได้ดี)</h3>
-                        <div id="res-passion" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-[2rem] border-2 border-[#FFDAC1] shadow-sm text-center">
-                        <div class="inline-block bg-mission text-gray-700 font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Mission</div>
-                        <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 1 + 2<br>(สิ่งที่เรารัก และมีประโยชน์ต่อโลก)</h3>
-                        <div id="res-mission" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-[2rem] border-2 border-[#E2F0CB] shadow-sm text-center">
-                        <div class="inline-block bg-vocation text-green-800 font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Vocation</div>
-                        <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 2 + 3<br>(สิ่งที่มีประโยชน์ต่อโลก และสร้างรายได้)</h3>
-                        <div id="res-vocation" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-[2rem] border-2 border-[#C5E3D6] shadow-sm text-center">
-                        <div class="inline-block bg-profession text-teal-800 font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Profession</div>
-                        <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 3 + 4<br>(สิ่งที่สร้างรายได้ และเราทำได้ดี)</h3>
-                        <div id="res-profession" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
-                    </div>
+                <div class="age-card bg-white p-8 rounded-3xl shadow-sm text-center" onclick="startIkigai('Mid-Career (30-45)')">
+                    <div class="text-5xl mb-4">🔥</div>
+                    <h3 class="text-2xl font-mali font-bold text-gray-800 mb-3">วัยสร้างความมั่นคง<br><span class="text-lg text-[#5A639C]">(30-45 ปี)</span></h3>
+                    <p class="text-gray-500 font-kanit text-sm">งานเริ่มมั่นคง แต่รู้สึกหมดไฟ ตื่นมาแล้วไม่อยากไปทำงาน... อยากตามหาแพสชันที่หล่นหาย</p>
                 </div>
-            </section>
 
-            <section class="fade-in delay-200 mt-12 pb-10">
-                <div id="capture-area">
-                    <h2 class="text-3xl font-mali font-bold text-center mb-8 text-[#5A639C]">แผนภาพ Ikigai ของฉัน</h2>
+                <div class="age-card bg-white p-8 rounded-3xl shadow-sm text-center" onclick="startIkigai('Silver Age (55+)')">
+                    <div class="text-5xl mb-4">🌻</div>
+                    <h3 class="text-2xl font-mali font-bold text-gray-800 mb-3">วัยส่งต่อคุณค่าและภูมิปัญญา<br><span class="text-lg text-[#5A639C]">(55 ปีขึ้นไป)</span></h3>
+                    <p class="text-gray-500 font-kanit text-sm">มีเวลาว่างมากขึ้น อยากนำประสบการณ์ทั้งชีวิต มาสร้างคุณค่า รอยยิ้ม และส่งต่อให้คนรอบข้าง</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-content" style="display: none;">
+            
+            <header class="max-w-4xl mx-auto text-center mb-10 fade-in">
+                <h1 class="text-5xl md:text-6xl font-mali font-bold text-gray-700 mb-4 tracking-wide">ค้นหา <span class="text-[#5A639C]">IKIGAI</span> ของตัวเองกัน</h1>
+                <div class="bg-white/60 p-6 rounded-3xl shadow-sm border border-orange-100 inline-block text-left max-w-2xl mt-4">
+                    <h2 class="text-2xl font-semibold mb-3 text-orange-400 font-mali">แบบไหนถึงเรียก Ikigai?</h2>
+                    <ul class="list-disc list-inside space-y-2 text-lg">
+                        <li>ความหมายของชีวิต และเหตุผลของการมีชีวิตอยู่ของเรา</li>
+                        <li>ไม่ใช่เหตุผลของคนอื่น ไม่ใช่สิ่งที่คนอื่นคาดหวังหรือบอกว่าดี</li>
+                        <li>เป็นสิ่งที่เรารู้ว่าเราทำได้ดี เป็นสิ่งที่เรารัก และทำให้เรามีรายได้</li>
+                        <li>บางทีก็บอกยากเท่าไหร่...ก็เท่านั้น แค่ลองหมั่นสังเกตทบทวน</li>
+                    </ul>
+                </div>
+            </header>
+
+            <main class="max-w-6xl mx-auto space-y-12">
+                
+                <section class="fade-in delay-100">
+                    <h2 class="text-3xl font-mali font-bold text-center mb-6">เช็กลิสต์ Ikigai (ตอบคำถาม 4 ข้อด้านล่าง)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-love p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
+                            <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
+                            <label for="input-love" class="block text-xl font-semibold mb-3 text-red-800">1. สิ่งที่เรารัก และมีความสุขที่ได้ทำ คืออะไร? (What you LOVE)</label>
+                            <textarea id="input-love" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่คุณรักที่นี่..."></textarea>
+                        </div>
+                        <div class="bg-world p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
+                            <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
+                            <label for="input-world" class="block text-xl font-semibold mb-3 text-yellow-800">2. สิ่งที่เราคิดว่ามีประโยชน์ต่อโลก คืออะไร? (What the world NEEDS)</label>
+                            <textarea id="input-world" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่เป็นประโยชน์ต่อโลกที่นี่..."></textarea>
+                        </div>
+                        <div class="bg-paid p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
+                            <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
+                            <label for="input-paid" class="block text-xl font-semibold mb-3 text-blue-800">3. สิ่งที่สร้างรายได้ให้เรา คืออะไร? (What you can be PAID FOR)</label>
+                            <textarea id="input-paid" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่สร้างรายได้ที่นี่..."></textarea>
+                        </div>
+                        <div class="bg-good p-6 rounded-[2rem] shadow-sm relative overflow-hidden group">
+                            <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/30 rounded-full"></div>
+                            <label for="input-good" class="block text-xl font-semibold mb-3 text-green-800">4. สิ่งที่เราทำได้ดี คืออะไร? (What you are GOOD AT)</label>
+                            <textarea id="input-good" rows="3" class="w-full p-4 rounded-2xl border-0 bg-white/70 focus:bg-white text-gray-800" placeholder="พิมพ์สิ่งที่คุณทำได้ดีที่นี่..."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="border-orange-200">
+
+                <section class="fade-in delay-200">
+                    <h2 class="text-3xl font-mali font-bold text-center mb-2">จุดซ้อนทับของตัวตน</h2>
+                    <p class="text-center text-lg mb-8 text-gray-500">ระบบจะนำคำตอบของคุณมาจับคู่กันเพื่อค้นหาตัวตนในด้านต่างๆ</p>
                     
-                    <div class="venn-wrapper shadow-xl rounded-full bg-white/30 backdrop-blur-sm p-4">
-                        <div class="venn-circle vc-love"></div>
-                        <div class="venn-circle vc-needs"></div>
-                        <div class="venn-circle vc-paid"></div>
-                        <div class="venn-circle vc-good"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-[2rem] border-2 border-[#FFB7B2] shadow-sm text-center">
+                            <div class="inline-block bg-passion text-white font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Passion</div>
+                            <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 1 + 4<br>(สิ่งที่เรารัก และเราทำได้ดี)</h3>
+                            <div id="res-passion" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-[2rem] border-2 border-[#FFDAC1] shadow-sm text-center">
+                            <div class="inline-block bg-mission text-gray-700 font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Mission</div>
+                            <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 1 + 2<br>(สิ่งที่เรารัก และมีประโยชน์ต่อโลก)</h3>
+                            <div id="res-mission" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-[2rem] border-2 border-[#E2F0CB] shadow-sm text-center">
+                            <div class="inline-block bg-vocation text-green-800 font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Vocation</div>
+                            <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 2 + 3<br>(สิ่งที่มีประโยชน์ต่อโลก และสร้างรายได้)</h3>
+                            <div id="res-vocation" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-[2rem] border-2 border-[#C5E3D6] shadow-sm text-center">
+                            <div class="inline-block bg-profession text-teal-800 font-mali font-bold text-2xl px-8 py-3 rounded-full mb-4 shadow-sm">Profession</div>
+                            <h3 class="font-semibold text-lg text-gray-600 mb-2">คำตอบข้อ 3 + 4<br>(สิ่งที่สร้างรายได้ และเราทำได้ดี)</h3>
+                            <div id="res-profession" class="min-h-[60px] p-4 bg-gray-50 rounded-xl text-gray-700 whitespace-pre-line italic text-lg">- รอข้อมูล -</div>
+                        </div>
+                    </div>
+                </section>
 
-                        <div id="val-love" class="diagram-val val-love text-xl md:text-2xl">สิ่งที่รัก</div>
-                        <div id="val-world" class="diagram-val val-needs text-xl md:text-2xl">โลกต้องการ</div>
-                        <div id="val-paid" class="diagram-val val-paid text-xl md:text-2xl">สร้างรายได้</div>
-                        <div id="val-good" class="diagram-val val-good text-xl md:text-2xl">ทำได้ดี</div>
-
-                        <div class="venn-label vl-inter vi-passion">Passion</div>
-                        <div class="venn-label vl-inter vi-mission">Mission</div>
-                        <div class="venn-label vl-inter vi-profession">Profession</div>
-                        <div class="venn-label vl-inter vi-vocation">Vocation</div>
+                <section class="fade-in delay-200 mt-12 pb-10">
+                    <div id="capture-area">
+                        <h2 class="text-3xl font-mali font-bold text-center mb-8 text-[#5A639C]">แผนภาพ Ikigai ของฉัน</h2>
                         
-                        <div id="ikigai-center-display" class="ikigai-center">
-                            เติมให้ครบ<br>ทั้ง 4 ข้อ
+                        <div class="venn-wrapper shadow-xl rounded-full bg-white/30 backdrop-blur-sm p-4">
+                            <div class="venn-circle vc-love"></div>
+                            <div class="venn-circle vc-needs"></div>
+                            <div class="venn-circle vc-paid"></div>
+                            <div class="venn-circle vc-good"></div>
+
+                            <div id="val-love" class="diagram-val val-love text-xl md:text-2xl">สิ่งที่รัก</div>
+                            <div id="val-world" class="diagram-val val-needs text-xl md:text-2xl">โลกต้องการ</div>
+                            <div id="val-paid" class="diagram-val val-paid text-xl md:text-2xl">สร้างรายได้</div>
+                            <div id="val-good" class="diagram-val val-good text-xl md:text-2xl">ทำได้ดี</div>
+
+                            <div class="venn-label vl-inter vi-passion">Passion</div>
+                            <div class="venn-label vl-inter vi-mission">Mission</div>
+                            <div class="venn-label vl-inter vi-profession">Profession</div>
+                            <div class="venn-label vl-inter vi-vocation">Vocation</div>
+                            
+                            <div id="ikigai-center-display" class="ikigai-center">
+                                เติมให้ครบ<br>ทั้ง 4 ข้อ
+                            </div>
+                        </div>
+
+                        <div id="final-summary-card" class="mt-12 mx-auto max-w-4xl bg-white p-8 rounded-[2rem] shadow-lg border-2 border-indigo-100 hidden flex-col items-center">
+                            <h2 class="text-4xl md:text-5xl font-mali font-bold text-[#5A639C] mb-6 tracking-widest">IKIGAI</h2>
+                            <p class="text-xl mb-6 text-gray-700 font-medium text-center">จุดกึ่งกลางของทุกสิ่ง คือความหมายในการตื่นนอนทุกเช้าของคุณ</p>
+                            <div id="res-ikigai-text" class="w-full text-lg text-gray-700 leading-relaxed text-center font-mali bg-gray-50 p-6 rounded-2xl shadow-inner mb-2"></div>
                         </div>
                     </div>
 
-                    <div id="final-summary-card" class="mt-12 mx-auto max-w-4xl bg-white p-8 rounded-[2rem] shadow-lg border-2 border-indigo-100 hidden flex-col items-center">
-                        <h2 class="text-4xl md:text-5xl font-mali font-bold text-[#5A639C] mb-6 tracking-widest">IKIGAI</h2>
-                        <p class="text-xl mb-6 text-gray-700 font-medium text-center">จุดกึ่งกลางของทุกสิ่ง คือความหมายในการตื่นนอนทุกเช้าของคุณ</p>
-                        <div id="res-ikigai-text" class="w-full text-lg text-gray-700 leading-relaxed text-center font-mali bg-gray-50 p-6 rounded-2xl shadow-inner mb-2"></div>
+                    <div id="action-area" class="mt-8 flex flex-col items-center hidden pb-10">
+                        <button id="btn-submit" class="bg-gradient-to-r from-[#5A639C] to-[#747dc4] text-white px-8 py-4 rounded-full font-mali font-bold text-xl hover:shadow-lg transform hover:-translate-y-1 transition-all">
+                            📸 บันทึกรูปภาพ Ikigai ของฉัน
+                        </button>
+                        <p id="submit-status" class="mt-3 text-gray-600 font-medium h-6"></p>
                     </div>
-                </div>
 
-                <div id="action-area" class="mt-8 flex flex-col items-center hidden pb-10">
-                    <button id="btn-submit" class="bg-gradient-to-r from-[#5A639C] to-[#747dc4] text-white px-8 py-4 rounded-full font-mali font-bold text-xl hover:shadow-lg transform hover:-translate-y-1 transition-all">
-                        📸 บันทึกรูปภาพ Ikigai ของฉัน
-                    </button>
-                    <p class="mt-2 text-sm text-gray-400 font-mali">*ข้อมูลจะถูกจัดเก็บเป็นสถิติภาพรวมแบบไม่ระบุตัวตน เพื่อนำไปพัฒนาต่อไป</p>
-                    <p id="submit-status" class="mt-3 text-gray-600 font-medium h-6"></p>
-                </div>
-
-            </section>
-        </main>
-    </div>
-
+                </section>
+            </main>
+        </div>
+    </div> <footer id="trust-footer" class="max-w-4xl mx-auto w-full px-4 pb-8 text-center" style="display: none;">
+        <p class="text-[#5A639C] font-mali font-bold text-lg md:text-xl mb-3">จัดทำโดย nhuying</p>
+        <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-4 md:p-6 inline-block text-sm md:text-base text-gray-600 font-kanit shadow-sm border border-gray-200 text-left md:text-center">
+            <p class="mb-1"><span class="text-green-600 font-bold">🔒 ปลอดภัย 100%:</span> เว็บไซต์นี้ทำงานบนเบราว์เซอร์ของคุณ ไม่มีการขอรหัสผ่าน</p>
+            <p class="mb-1">ไม่มีการเก็บข้อมูลส่วนบุคคลที่ระบุตัวตนได้ (PDPA Compliant)</p>
+            <p class="text-gray-400 text-xs md:text-sm mt-2 pt-2 border-t border-gray-200">ข้อมูลทั้งหมดจะถูกสรุปเป็นสถิติภาพรวมเพื่อการวิจัยเท่านั้น</p>
+        </div>
+    </footer>
     <script>
         // ==== ตัวแปรเก็บอายุที่ผู้ใช้เลือก ====
         let userAgeGroup = "ไม่ระบุ";
@@ -303,15 +309,19 @@
         window.addEventListener('load', () => {
             const splashScreen = document.getElementById('splash-screen');
             const landingPage = document.getElementById('landing-page');
+            const trustFooter = document.getElementById('trust-footer');
             
             setTimeout(() => {
                 splashScreen.classList.add('splash-hidden');
                 
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
-                    // แสดงหน้า landing page และเติมคลาสให้เล่นอนิเมชันที่นี่
+                    // แสดงหน้า landing page พร้อมกับส่วนท้ายเว็บ (Trust badge)
                     landingPage.style.display = 'block'; 
                     landingPage.classList.add('fade-in'); 
+                    
+                    trustFooter.style.display = 'block';
+                    trustFooter.classList.add('fade-in');
                 }, 1000); 
 
             }, 3500); 
@@ -319,13 +329,8 @@
 
         // ==== ฟังก์ชันเมื่อผู้ใช้กดเลือกช่วงอายุ ====
         function startIkigai(ageGroup) {
-            // บันทึกอายุไว้ในตัวแปร
             userAgeGroup = ageGroup;
-            
-            // ซ่อนหน้า Landing Page
             document.getElementById('landing-page').style.display = 'none';
-            
-            // เลื่อนขึ้นไปบนสุดและแสดงหน้าคำถาม (Main Content)
             window.scrollTo(0, 0);
             document.getElementById('main-content').style.display = 'block';
         }
@@ -464,10 +469,9 @@
             })
             .catch((error) => {
                 btnSubmit.classList.remove('loading');
-                // อัปเดตข้อความเมื่อดึงข้อมูล Google Sheets บน Localhost หรือโดนบล็อก ให้ดูซอฟต์ลง
                 btnSubmit.innerHTML = '✅ รูปภาพถูกบันทึกแล้ว';
                 submitStatus.innerText = 'รูปภาพโหลดสำเร็จ! (หากต้องการส่งสถิติเข้าระบบ กรุณาใช้อินเทอร์เน็ตปกติ)';
-                submitStatus.classList.add('text-orange-500'); // เปลี่ยนเป็นสีส้มเพื่อไม่ให้ตกใจ
+                submitStatus.classList.add('text-orange-500'); 
                 
                 setTimeout(() => {
                     btnSubmit.classList.remove('loading', 'bg-green-500');
