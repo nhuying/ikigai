@@ -109,14 +109,53 @@
         
         /* สไตล์พิเศษสำหรับกรอบตอนถ่ายรูปภาพ */
         #capture-area { background-color: #FFF9F5; padding-top: 2rem; padding-bottom: 2rem; border-radius: 2rem; }
+        
+        /* สไตล์สำหรับกล่องเลือกอายุ */
+        .age-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .age-card:hover {
+            transform: translateY(-5px);
+            border-color: #5A639C;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
 
     <div id="splash-screen">
         <h1 id="random-splash-text" class="splash-text text-2xl md:text-4xl font-mali font-bold leading-loose md:leading-[2]">
-            </h1>
+        </h1>
         <p class="splash-text text-lg md:text-xl text-gray-400 mt-8 font-kanit" style="animation-delay: 1s;">กรุณารอสักครู่...</p>
+    </div>
+
+    <div id="landing-page" class="max-w-4xl mx-auto pt-10 pb-20 fade-in" style="display: none;">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-mali font-bold text-[#5A639C] mb-6 leading-tight">เหตุผลในการตื่นนอนพรุ่งนี้เช้าของคุณ... <br>คืออะไร? 🧭</h1>
+            <p class="text-xl text-gray-600 font-kanit max-w-2xl mx-auto">ไม่ว่าคุณจะอยู่ในช่วงวัยไหน ชีวิตก็พร้อมให้เราค้นพบความหมายที่ซ่อนอยู่เสมอ... เลือกช่วงวัยที่ตรงกับคุณ เพื่อเริ่มต้นค้นหา Ikigai ของตัวเอง</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="age-card bg-white p-8 rounded-3xl shadow-sm text-center" onclick="startIkigai('First Jobber (20-28)')">
+                <div class="text-5xl mb-4">🌱</div>
+                <h3 class="text-2xl font-mali font-bold text-gray-800 mb-3">วัยเริ่มต้นค้นหาเส้นทาง<br><span class="text-lg text-[#5A639C]">(20-28 ปี)</span></h3>
+                <p class="text-gray-500 font-kanit text-sm">กำลังค้นหาตัวเอง สับสนกับเส้นทาง อยากรู้ว่าสิ่งที่ชอบกับสิ่งที่ใช่... คือทางเดียวกันไหม?</p>
+            </div>
+            
+            <div class="age-card bg-white p-8 rounded-3xl shadow-sm text-center" onclick="startIkigai('Mid-Career (30-45)')">
+                <div class="text-5xl mb-4">🔥</div>
+                <h3 class="text-2xl font-mali font-bold text-gray-800 mb-3">วัยสร้างความมั่นคง<br><span class="text-lg text-[#5A639C]">(30-45 ปี)</span></h3>
+                <p class="text-gray-500 font-kanit text-sm">งานเริ่มมั่นคง แต่รู้สึกหมดไฟ ตื่นมาแล้วไม่อยากไปทำงาน... อยากตามหาแพสชันที่หล่นหาย</p>
+            </div>
+
+            <div class="age-card bg-white p-8 rounded-3xl shadow-sm text-center" onclick="startIkigai('Silver Age (55+)')">
+                <div class="text-5xl mb-4">🌻</div>
+                <h3 class="text-2xl font-mali font-bold text-gray-800 mb-3">วัยส่งต่อคุณค่าและภูมิปัญญา<br><span class="text-lg text-[#5A639C]">(55 ปีขึ้นไป)</span></h3>
+                <p class="text-gray-500 font-kanit text-sm">มีเวลาว่างมากขึ้น อยากนำประสบการณ์ทั้งชีวิต มาสร้างคุณค่า รอยยิ้ม และส่งต่อให้คนรอบข้าง</p>
+            </div>
+        </div>
     </div>
 
     <div id="main-content" style="display: none;">
@@ -193,7 +232,6 @@
             </section>
 
             <section class="fade-in delay-200 mt-12 pb-10">
-                
                 <div id="capture-area">
                     <h2 class="text-3xl font-mali font-bold text-center mb-8 text-[#5A639C]">แผนภาพ Ikigai ของฉัน</h2>
                     
@@ -229,14 +267,18 @@
                     <button id="btn-submit" class="bg-gradient-to-r from-[#5A639C] to-[#747dc4] text-white px-8 py-4 rounded-full font-mali font-bold text-xl hover:shadow-lg transform hover:-translate-y-1 transition-all">
                         📸 บันทึกรูปภาพ Ikigai ของฉัน
                     </button>
-                    <p class="mt-1 text-sm text-gray-400 font-mali">*ข้อมูลจะถูกจัดเก็บเป็นสถิติภาพรวมแบบไม่ระบุตัวตน เพื่อนำไปพัฒนาต่อไป</p>
+                    <p class="mt-2 text-sm text-gray-400 font-mali">*ข้อมูลจะถูกจัดเก็บเป็นสถิติภาพรวมแบบไม่ระบุตัวตน เพื่อนำไปพัฒนาต่อไป</p>
                     <p id="submit-status" class="mt-3 text-gray-600 font-medium h-6"></p>
                 </div>
 
             </section>
-
         </main>
-    </div> <script>
+    </div>
+
+    <script>
+        // ==== ตัวแปรเก็บอายุที่ผู้ใช้เลือก ====
+        let userAgeGroup = "ไม่ระบุ";
+
         // ==== ระบบสุ่มข้อความ Intro 4 แบบ ====
         const splashQuotes = [
             `"การเดินทางที่ไกลที่สุด...<br>คือการเดินทางเข้าไปในจิตใจของตัวเอง"`,
@@ -245,28 +287,38 @@
             `"มาค้นหาเหตุผล...<br>ในการตื่นนอนพรุ่งนี้เช้ากัน"`
         ];
         
-        // สุ่มหยิบข้อความ 1 ประโยคมาแสดง
         const randomQuote = splashQuotes[Math.floor(Math.random() * splashQuotes.length)];
         document.getElementById('random-splash-text').innerHTML = randomQuote;
-
 
         // ==== ระบบ Splash Screen Fade Out ====
         window.addEventListener('load', () => {
             const splashScreen = document.getElementById('splash-screen');
-            const mainContent = document.getElementById('main-content');
+            const landingPage = document.getElementById('landing-page');
             
-            // รอให้ข้อความแสดงสัก 3.5 วินาที แล้วค่อยเฟดออก
             setTimeout(() => {
                 splashScreen.classList.add('splash-hidden');
                 
-                // หลังจากเฟดออกไป 1 วินาที ให้ซ่อน div splash เลยและแสดงหน้าหลัก
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
-                    mainContent.style.display = 'block'; // ให้เนื้อหาหลักปรากฏพร้อม animation fade-in
+                    // เปลี่ยนจากโชว์ main-content เป็นโชว์ landing-page ให้เลือกอายุก่อน
+                    landingPage.style.display = 'block'; 
                 }, 1000); 
 
             }, 3500); 
         });
+
+        // ==== ฟังก์ชันเมื่อผู้ใช้กดเลือกช่วงอายุ ====
+        function startIkigai(ageGroup) {
+            // บันทึกอายุไว้ในตัวแปร
+            userAgeGroup = ageGroup;
+            
+            // ซ่อนหน้า Landing Page
+            document.getElementById('landing-page').style.display = 'none';
+            
+            // เลื่อนขึ้นไปบนสุดและแสดงหน้าคำถาม (Main Content)
+            window.scrollTo(0, 0);
+            document.getElementById('main-content').style.display = 'block';
+        }
 
         // ==== ใส่ URL ที่ได้จาก Google Apps Script ที่นี่ ====
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJ2prT2j7QVuCKOjpANoWoi9OMC7TC4dsvdDYE5oGuDGPQQV9am4WorMqUrQn6iyRjaQ/exec"; 
@@ -322,7 +374,6 @@
             valPaid.style.color = paid ? '#184F68' : '#2E86AB';
             valGood.style.color = good ? '#3B2956' : '#6A4C93';
 
-            // ตรวจสอบว่ากรอกครบ 4 ช่องหรือยัง
             if (love && world && paid && good) {
                 centerDisplay.classList.add('active');
                 centerDisplay.innerHTML = "🎉<br>IKIGAI";
@@ -335,7 +386,6 @@
                     <p class="mb-2"><strong class="text-blue-500">สร้างรายได้:</strong> ${paid}</p>
                     <p class="mb-2"><strong class="text-green-600">สิ่งที่คุณทำได้ดี:</strong> ${good}</p>
                 `;
-                // แสดงปุ่มบันทึก
                 actionArea.classList.remove('hidden');
                 actionArea.classList.add('fade-in');
             } else {
@@ -344,7 +394,6 @@
                 
                 summaryCard.classList.add('hidden');
                 summaryCard.classList.remove('flex');
-                // ซ่อนปุ่มบันทึก
                 actionArea.classList.add('hidden');
                 actionArea.classList.remove('fade-in');
             }
@@ -357,33 +406,31 @@
 
         // ระบบจับภาพหน้าจอและส่งข้อมูล
         btnSubmit.addEventListener('click', () => {
+            // เพิ่ม userAgeGroup เข้าไปในชุดข้อมูลที่จะส่งไป Google Sheets
             const data = {
+                ageGroup: userAgeGroup, 
                 love: inputLove.value.trim(),
                 world: inputWorld.value.trim(),
                 paid: inputPaid.value.trim(),
                 good: inputGood.value.trim()
             };
 
-            // 1. เปลี่ยนสถานะปุ่มกำลังโหลด
             btnSubmit.classList.add('loading');
             btnSubmit.innerHTML = 'กำลังบันทึก... ⏳';
             submitStatus.innerText = '';
             submitStatus.className = "mt-4 text-gray-600 font-medium h-6";
 
-            // 2. จับภาพหน้าจอเฉพาะพื้นที่ id="capture-area"
             const captureArea = document.getElementById('capture-area');
             
             html2canvas(captureArea, {
                 scale: 2, 
                 backgroundColor: "#FFF9F5" 
             }).then(canvas => {
-                // 3. สร้างระบบดาวน์โหลดรูปภาพ
                 const link = document.createElement('a');
                 link.download = 'My_Ikigai_Result.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click(); 
 
-                // 4. เตรียมส่งข้อมูลไป Sheet
                 return fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -394,14 +441,12 @@
                 });
             })
             .then(() => {
-                // 5. เมื่อส่งข้อมูลเสร็จสิ้น
                 btnSubmit.innerHTML = '✅ บันทึกรูปภาพสำเร็จ!';
                 btnSubmit.classList.remove('from-[#5A639C]', 'to-[#747dc4]');
                 btnSubmit.classList.add('bg-green-500');
-                submitStatus.innerText = 'รูปภาพถูกดาวน์โหลดลงเครื่องคุณแล้ว!';
+                submitStatus.innerText = 'รูปภาพถูกดาวน์โหลดลงเครื่องคุณแล้ว! (ข้อมูลสถิติถูกบันทึกเรียบร้อย)';
                 submitStatus.classList.add('text-green-600');
                 
-                // รีเซ็ตปุ่มกลับหลังผ่านไป 5 วินาที
                 setTimeout(() => {
                     btnSubmit.classList.remove('loading', 'bg-green-500');
                     btnSubmit.classList.add('from-[#5A639C]', 'to-[#747dc4]');
